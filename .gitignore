@@ -1,0 +1,14 @@
+**/*.ipynb_checkpoints/
+__pycache__/
+*.egg-info/
+*nohup.out
+lib/pong_deeprl/*
+results/jupong2d-headless-0.4-v3/stablebl*
+.idea/
+src/deeprl_lib/nolib/results/*/
+src/deeprl_lib/rllib/results/*/
+src/deeprl_lib/stablebaselines/results/*/
+results/*/
+*err.*
+*out.*
+*.sbatchout

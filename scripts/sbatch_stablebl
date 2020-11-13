@@ -1,0 +1,14 @@
+#!/bin/bash -x
+#SBATCH --account=cstvs
+#SBATCH --nodes=1
+#SBATCH --ntasks=24
+#SBATCH --output=stablebl_out.%j
+#SBATCH --error=stablebl_err.%j
+#SBATCH --time=00:30:00
+#SBATCH --partition=devel
+
+source ../lib/pong_deeprl/bin/activate
+deep_stablebl --help
+deep_stablebl --pl 2.0 --session 1 --tts 10000 --train-steps 3 ../results/stablebl_results
+deep_stablebl --play --pl 2.0 --session 1 --play-steps 2 ../results/stablebl_results
+plot_stablebl ../results/stablebl_results

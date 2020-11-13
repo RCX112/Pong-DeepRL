@@ -1,0 +1,89 @@
+image: gitlab.version.fz-juelich.de:5555/azzam1/pong_deeprl:1.0
+
+stages:
+  - Docker Image
+  - Static Analysis
+  - Unit Testing
+  - Coverage
+  
+before_script:
+  - python --version
+
+dockerfile:
+  stage: Docker Image
+  tags:
+    - public-docker
+  script:
+    - python --version
+    - pip list
+    - echo "Success"
+
+prospector:
+  stage: Static Analysis
+  tags:
+    - linux
+  allow_failure: true
+  script:
+    - source ./ci/prospector.sh
+  artifacts:
+    name: logs
+    when: always
+    paths:
+      - prospector_output.txt
+      - prospector.svg
+      
+bandit:
+  stage: Static Analysis
+  tags:
+    - linux
+  allow_failure: true
+  script:
+    - bash ./ci/bandit.sh
+  artifacts:
+    name: logs
+    when: always
+    paths:
+      - bandit_output.txt
+      - bandit.svg
+ 
+mypy:
+  stage: Static Analysis
+  tags:
+    - linux
+  allow_failure: true
+  script:
+    - bash ./ci/mypy.sh
+  artifacts:
+    name: logs
+    when: always
+    paths:
+      - mypy_output.txt
+      - mypy.svg
+      
+pytest:
+  stage: Unit Testing
+  tags:
+    - linux
+  allow_failure: true
+  script:
+    - bash ./ci/pytest.sh
+  artifacts:
+    name: logs
+    when: always
+    paths:
+      - pytest_output.txt
+      - pytest.svg
+      
+coverage:
+  stage: Coverage
+  tags:
+    - linux
+  allow_failure: true
+  script:
+    - bash ./ci/coverage.sh
+  artifacts:
+    name: logs
+    when: always
+    paths:
+      - coverage_output.txt
+      - coverage.svg

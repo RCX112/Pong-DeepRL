@@ -1,0 +1,14 @@
+#!/bin/bash -x
+#SBATCH --account=cstvs
+#SBATCH --nodes=1
+#SBATCH --ntasks=24
+#SBATCH --output=rllib_out.%j
+#SBATCH --error=rllib_err.%j
+#SBATCH --time=00:30:00
+#SBATCH --partition=devel
+
+source ../lib/pong_deeprl/bin/activate
+deep_rllib --help
+deep_rllib --restore --pl 0.5 --session 1 --stop-iters 5 --checkpoint-freq 5 --num-workers 16 ../results/rllib_results
+deep_rllib --play --pl 0.5 --session 1 --play-steps 3 ../results/rllib_results
+plot_rllib ../results/rllib_results

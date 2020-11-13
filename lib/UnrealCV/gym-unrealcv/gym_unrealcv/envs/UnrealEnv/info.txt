@@ -1,0 +1,4 @@
+Linux Folder:
+- RealisticRendering_LinuxX86_64/LinuxNoEditor/[...]
+Windows Folder:
+- RealisticRendering_Win64/WindowsNoEditor/[...]

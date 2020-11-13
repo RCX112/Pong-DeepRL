@@ -1,0 +1,16 @@
+psutil
+numpy
+jupyter
+gym
+gym[atari]
+stable_baselines
+parameters
+pygame
+opencv-python==4.2.0.34
+tensorflow==1.14
+ray[rllib]
+ipykernel
+pyzmq
+-e ./lib/jupong/gym-pong
+-e ./lib/jupong/pong_basis
+-e ./lib/UnrealCV/gym-unrealcv

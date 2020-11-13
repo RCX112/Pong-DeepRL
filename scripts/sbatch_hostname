@@ -1,0 +1,11 @@
+#!/bin/bash -x
+#SBATCH --account=cstvs
+#SBATCH --nodes=1
+#SBATCH --ntasks=24
+#SBATCH --output=out.%j
+#SBATCH --error=err.%j
+#SBATCH --time=00:10:00
+#SBATCH --partition=devel
+
+hostname
+pwd
