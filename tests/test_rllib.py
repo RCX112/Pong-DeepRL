@@ -1,45 +1,63 @@
 """
-TestSuite for the RLlib library.
+This python file contains a TestSuite for the Pong DeepRL project.
 """
 import unittest
 import sys
-from deeprl_lib.rllib.jupong2d_ppo import *
-
-# Configurations outside of test class
-num_cpus = 0
-ray.init(num_cpus=num_cpus or None)
-
-# If you register an environment inside a test class the program will crash
-pl = 0.5
-register_gym_env(pl)
+from src.deeprl_lib.rllib.jupong2d_ppo import *
+from src.deeprl_lib.rllib.jupong2d_plot_ppo_data import *
 
 class TestRllib(unittest.TestCase):
     """
-    Testclass for RLlib.
+    Testcase for the library RLlib.
     """
     def __init__(self, *args, **kwargs):
         super(TestRllib, self).__init__(*args, **kwargs)
-        self.pl = pl
-        self.session = 1
-        self.checkpoint_freq = 10
         self.run_alg = "PPO"
-        self.num_workers = 16
+        self.num_cpus = 0
+        self.env_name = "jupong2d"
+        self.num_workers = 3
         self.env_per_worker = 5
-        self.stop_iters = 20
+        self.stop_reward = None
+        self.stop_iters = 5
         self.stop_timesteps = None
         
-        self.config, self.stop = rllib_configurations(self.run_alg, self.num_workers, self.env_per_worker, 
-                                     20.0, stop_iters=self.stop_iters, stop_timesteps=self.stop_timesteps)
-        self.output_folder = "rllib_test"
-        self.save_folder, self.results_path = create_result_paths(self.output_folder, self.session, self.pl)
-        self.latest_checkpoint_path = None
+        self.output_folder = "test_rllib"
+        self.paddle_length_factor = 0.5
+        self.session = 1
+        self.checkpoint_freq = 5
+
+        self.restore = True
+        self.play = True
+        self.play_steps = 1
         
     def setUp(self):
         pass
 
+    def runTest(self):
+        print("Running tests of the class TestRllib")
+        self.test_configurations()
+        self.test_training()
+        self.test_playing()
+        self.test_ploting()
+            
+    def test_configurations(self):
+        train_runner = RunRLlib(self.output_folder, self.num_cpus, self.env_name, self.paddle_length_factor,                                                       session=self.session, checkpoint_frequency=self.checkpoint_freq, stop_iters=self.stop_iters,                                       restore=self.restore)
+        self.assertTrue(train_runner.stop is not None)
+        
     def test_training(self):
-        pass
-
+        train_runner = RunRLlib(self.output_folder, self.num_cpus, self.env_name, self.paddle_length_factor,                                                       session=self.session, checkpoint_frequency=self.checkpoint_freq, stop_iters=self.stop_iters,                                       restore=self.restore)
+        train_runner.start()
+    
+    def test_playing(self):
+        play_runner = RunRLlib(self.output_folder, self.num_cpus, self.env_name, self.paddle_length_factor,                                                       session=self.session, play=self.play, play_steps=self.play_steps)
+        play_runner.start()
+    
+    def test_ploting(self):
+        ploter = JuPong2D_PPO_Plot(self.output_folder)
+        ploter.plot_paddle_length()
+        
 
 if __name__ == '__main__':
-    unittest.main()
+    suite = unittest.TestSuite()
+    suite.addTest(TestRllib())
+    unittest.TextTestRunner().run(suite)

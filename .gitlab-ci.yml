@@ -7,6 +7,10 @@ stages:
   - Coverage
   
 before_script:
+  - pip install -e ./lib/jupong/gym-pong
+  - pip install -e ./lib/jupong/pong_basis
+  - pip install -e ./lib/UnrealCV/gym-unrealcv
+  - pip list
   - python --version
 
 dockerfile:

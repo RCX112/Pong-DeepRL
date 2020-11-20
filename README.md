@@ -29,6 +29,11 @@ The figure below explains the key concepts of Deep Reinforcement Learning. On th
 
 **Key Concepts of Deep Reinforcement Learning**  
 
+### Using Supercomputers
+
+Sometimes the training of neuronal networks can be really expensive in relation to the number of computations. If possible, Supercomputers can reduce the effort by a lot. In this project I used a Supercomputer called JUWELS from the Forschungszentrum Jülich in Germany (you can read more information here: https://www.fz-juelich.de/ias/jsc/EN/Expertise/Supercomputers/JUWELS/JUWELS_node.html). It helps you to train a neuronal network in less than a day, compared to a normal PC, which can take multiple days or even weeks to achieve just as good training results. If you are a JUWELS-User, you can directly test the Deep Reinforcement Learning libraries by using one of the Jupyter-Notebooks, which I've written for this case. If you don't have access to any Supercomputer, it's no problem, you can still run your tests on your local machine. 
+
+
 ## Deployment of the Unreal Engine  
 
 Training an AI to drive a car by itself is a hard challenge in the real world. The internal neuronal network needs a lot of training data to achieve good driving results. A huge problem here is that the neuronal network needs to know what a bad decision during the training looks like. That means it has to discover situations where the driven car could crash or where other people could be in danger, so it can avoid that types of wrong decisions when it is completely trained. You need a lot of this bad data to make the network more stable, but this is extremely expensive if you do this in the real world. 
